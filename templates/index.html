@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playing with text</title>
+    <link rel="stylesheet" href="static/index.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Pacifico&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <h3>Sachin's Text Academy</h3>
+        <nav class="navbar">
+
+            <a href="/"> Home </a>
+            <a href=""> Contact Us </a>
+
+        </nav>
+        <form action="/">
+            <input type="text" size="30" name="search" id="">
+            <button type="submit">Go..</button>
+        </form>
+    </div>
+
+    <main>
+        <div class="mainbox">
+            <h3>Enter text to apply operations</h3>
+            <form action="/analyse" method="post">
+                {% csrf_token %}
+                <textarea name="text" id="textbox" cols="100" rows="11"></textarea>
+                <br> 
+              <input type="checkbox" name="removepunc"  > Remove Punctuations
+              <br>
+              
+              <input type="checkbox" name="capitalise"  > CAPITALISE 
+              <br>
+              <input type="checkbox" name="lowercase"  > To the lower case 
+              <br>
+              <input type="checkbox" name="space_remover" >
+              Remove Extra Spaces
+              <br>
+               
+              <input type="checkbox" name="charcount"  > Count the Characters
+            <br>
+             
+               
+              <input type="checkbox" name="remnwlines"  > Remove New Lines
+              <br>
+              <button type="submit">Analyze Text</button>
+            </form>
+        </div>
+    </main>
+
+</body>
+
+</html>

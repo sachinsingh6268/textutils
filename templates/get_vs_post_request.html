@@ -1,0 +1,72 @@
+<!-- WHAT IS THE DIFFERENCE BETWEEN GET AND POST REQUEST?? WHEN TO USE GET REQUEST AND WHEN TO USE POST REQUEST??  -->
+
+
+<!--
+----------------------  GET REQUEST  ------------------
+HTTP GET: The Hypertext Transfer Protocol(HTTP) Get method is mainly used at the client (Browser) side to send a request to a specified server to get certain data or resources. Using this method the server should only let us receive the data and not change its state. Hence it is only used to view something and not to change it. Get method is one of the most used HTTP method. The request parameter of the get method is appended to the URL. Get request is better for the data which does not need to be secure (It means the data which does not contain images or word documents). 
+-->
+
+
+
+
+<!-- 
+----------------------  POST REQUEST  ------------------
+HTTP POST: The Hypertext Transfer Protocol(HTTP) Post method is mainly used at the client (Browser) side to send data to a Specified server in order to create or rewrite a particular resource/data. This data sent to the server is stored in the request body of the HTTP request. Post method eventually leads to the creation of a new resource or updating an existing one. Due to this dynamic use, it is one of the most used HTTP methods. It is not one of the most secure methods because the data that is been sent is included in the body of the request and not in the URL. Post request is better for the data which needs to be secure (It means the data which contains images or word documents).
+
+It's normally used when we don't want to show our data to the url like when we are changing our password that password we don't want to show up in the url. IN SUCH INSTANCES WE WILL USE POST REQUEST. 
+
+But in get request too, there is limit in the url(text in the url) length. So if a particular length is crossed then that request will be blocked in some of the website. It may be handled by some of the servers BUT WE DON'T WANT OUR WEBSITE TO BE WEAK OR IRRESPONSIVE AT ANY TIME. So in all such cases we will use the POST method request.
+
+FORMS has 'GET' method by default.                                            
+
+FOR USING 'POST' INSTEAD OF 'GET' WE SIMPLY WANT TO REPLACE GET BY POST IN THE FORM AND IN THE 'views.py'('GET' TO BE REPLACES WITH 'POST'). DJANGO by default provides us the protection using 'CSRF' SO WE ALSO HAVE TO HANDLE THE CSRF HERE.
+
+FINALLY IF WE WANT OUR URL CLEAN, FOR THIS PURPOSE ALSO WE CAN USE POST METHOD REQUEST
+-->
+
+
+
+
+
+<!--
+    ------------------------  CSRF --------------------------------  
+ Cross-Site Request Forgery (CSRF) is an attack that forces authenticated users to submit a request to a Web application against which they are currently authenticated. CSRF attacks exploit the trust a Web application has in an authenticated user.
+Cross Site Request Forgery (CSRF) is one of the most severe vulnerabilities which can be exploited in various ways- from changing user’s info without his knowledge to gaining full access to user’s account.
+
+Almost every website uses cookies today to maintain a user’s session. Since HTTP is a “stateless” protocol, there is no built in way to keep a user authenticated for a series of requests. Asking user for his credentials at each operation is a very bad idea in terms of user experience, This is why cookies are used. Cookies are very efficient for this purpose and are secure if they possess enough entropy, cryptographic strength and are transmitted over a secure channel (using HTTPS).
+
+However, there is a problem, browsers submit cookies to a website whenever a request is made to that website without checking the “origin” of the request. This is where CSRF comes into picture.
+
+The attacker places some code on his website that makes a genuine looking request to the target website. The cookies of the target website will be added by the browser in the request . This will make that forged request a legal one and it’s action will be successfully carried out.
+
+Attack Surfaces:
+The attack surfaces for CSRF are mostly HTTP requests that cause a change in something related to the victim, for example: name, email address, website and even password. It is sometimes used to alter the state of authentication as well. (Login CSRF, Logout CSRF) which are less severe but can still be problematic in some cases.
+
+Exploitation:
+Consider a website example.com and the attacker’s website evil.com. Also assume that the victim is logged in and his session is being maintained by cookies. The attacker will:
+
+Find out what action he needs to perform on behalf of the victim and find out its endpoint (for example, to change password on target.com a POST request is made to the website that contains new password as the parameter.)
+Place HTML code on his website evil.com that will imitate a legal request to target.com (for example, a form with method as post and a hidden input field that contains the new password).
+Make sure that the form is submitted by either using “autosubmit” or luring the victim to click on a submit button.
+When the victim visits evil.com and that form is submitted, the victim’s browser makes a request to target.com for a password change. Also the browser appends the cookies with the request. The server treats it as a genuine request and resets the victim’s password to the attacker’s supplied value. This way the victim’s account gets taken over by the attacker.
+
+Prevention:
+
+On user side:
+User side prevention is very inefficient in terms of browsing experience, prevention can be done by browsing only a single tab at a time and not using the “remember-me” functionality.
+On Server Side:
+There are many proposed ways to implement CSRF protection on server side, among which the use of CSRF tokens is most popular. A CSRF token is a string that is tied to a user’s session but is not submitted automatically. A website proceeds only when it receives a valid CSRF token along with the cookies, since there is no way for an attacker to know a user specific token, the attacker can not perform actions on user’s behalf.
+-->
+
+
+
+
+<!-- 
+------------------------  CSRF TOKEN  ----------------------------
+A CSRF token is a string that is tied to a user's session but is not submitted automatically. A website proceeds only when it receives a valid CSRF token along with the cookies, since there is no way for an attacker to know a user specific token, the attacker can not perform actions on user's behalf.
+
+A CSRF token is a secure random token (e.g., synchronizer token or challenge token) that is used to prevent CSRF attacks. The token needs to be unique per user session and should be of large random value to make it difficult to guess. A CSRF secure application assigns a unique CSRF token for every user session.
+
+
+SO FOR GIVING CSRF TOKEN WE HAVE TO SIMPLY PUT '{% crsf_token %}' INSIDE OUR FORM TAG
+-->
